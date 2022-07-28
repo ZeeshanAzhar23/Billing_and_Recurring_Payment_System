@@ -1,0 +1,7 @@
+<%if current_user.role == 'admin' %>
+<%= render 'admin'%>
+<%end%>
+<%if current_user.role == 'buyer' %>
+<%= render 'buyer'%>
+<%end%>
+

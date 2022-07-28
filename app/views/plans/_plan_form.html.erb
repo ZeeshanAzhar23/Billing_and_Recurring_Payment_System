@@ -1,0 +1,33 @@
+<%= form_with(model: @plan, local: true) do |form| %>
+  <div class='form-group'>
+    <% if @plan.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@plan.errors.count, "error") %> prohibited
+        this plan from being saved:
+      </h2>
+      <ul>
+        <% @plan.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+    <% end %>
+
+  <p>
+    <%= form.label :name %><br>
+    <%= form.text_field :name , class: 'form-control' %>
+  </p>
+
+  <p>
+    <%= form.label :monthly_fee %><br>
+    <%= form.text_field :monthly_fee, class: 'form-control'%>
+  </p>
+
+  <p>
+
+    <%= form.submit 'Submit', :class => 'btn btn-primary btn-danger'%>
+  </p>
+  </div>
+
+<% end %>

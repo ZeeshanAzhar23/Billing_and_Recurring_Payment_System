@@ -1,0 +1,89 @@
+<h1>Edit Your Details</h1>
+
+<%= form_with(model: @user, local: true) do |form| %>
+  <div class='form-group'>
+    <% if @user.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@user.errors.count, "error") %> prohibited
+        this user from being saved:
+      </h2>
+      <ul>
+        <% @user.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <p>
+    <%= form.label :name %><br>
+    <%= form.text_field :name , class: 'form-control' %>
+  </p>
+
+  <p>
+    <%= form.label :email %><br>
+    <%= form.text_area :email, class: 'form-control'%>
+  </p>
+
+  <p>
+    <%= form.submit 'Submit', :class => 'btn btn-primary btn-danger'%>
+  </p>
+  </div>
+
+<% end %>
+
+<%= link_to 'Back', :back, class: 'btn btn-primary btn-sm' %>
+
+
+
+<h2>Edit <%= @user.name.to_s.humanize %></h2>
+<div class='form-group'>
+<%= form_with(model: @user) do |f| %>
+  <div class='field'>
+    <%= image_tag(@user.avatar_thumbnail) if @user.avatar.attached? %>
+  </div>
+  <div class='field'>
+    <%= f.file_field :avatar%>
+  </div>
+  <div class="field">
+    <%= f.label :name %> <br />
+    <%= f.text_field :name, autocomplete: 'name',autofocus: true, class: 'form-control my-2' %>
+  </div>
+
+  <div class="field">
+    <%= f.label :email %><br />
+    <%= f.email_field :email, autofocus: true, autocomplete: "email", class: 'form-control my-2' %>
+  </div>
+
+  <div class="field">
+    <%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
+    <%= f.password_field :password, autocomplete: "new-password", class: 'form-control mb-0 my-2' %>
+  </div>
+
+  <div class="field">
+    <%= f.label :password_confirmation %><br />
+    <%= f.password_field :password_confirmation, autocomplete: "new-password", class: 'form-control my-2'  %>
+  </div>
+
+  <div class="field">
+    <%= f.label :password %> <i>(we need your current password to confirm your changes)</i><br />
+    <%= f.password_field :password, autocomplete: "password", class: 'form-control my-2' %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit 'Update', :class => 'btn btn-primary btn-danger my-3'%>
+  </div>
+<% end %>
+  <% if current_user.subscribed? %>
+    <div>
+      <%= button_to 'Manage Billing', billings_path ,class: 'btn btn-primary' %>
+    </div>
+  <% end %>
+</div>
+
+<%# <% if current_user.admin?%>
+<%# <h3>Cancel account</h3> %>
+<%# <p>Unhappy? <%= button_to "Cancel account", registration_path(@user_name), data: { confirm: "Are you sure?" }, method: :delete,class: 'btn btn-primary btn-danger'%></p>
+<%# <%end%>
+<%= link_to 'Back', :back, class: 'btn btn-primary btn-sm' %>

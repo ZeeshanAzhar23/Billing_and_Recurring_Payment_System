@@ -1,0 +1,36 @@
+<h1>Edit Your Details</h1>
+<%= form_with(model: @user, local: true) do |form| %>
+  <div class='form-group'>
+    <% if @user.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@user.errors.count, "error") %> prohibited
+        this user from being saved:
+      </h2>
+      <ul>
+        <% @user.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <p>
+    <%= form.label :name %><br>
+    <%= form.text_field :name , class: 'form-control' %>
+  </p>
+
+  <p>
+    <%= form.label :email %><br>
+    <%= form.text_area :email, class: 'form-control'%>
+  </p>
+
+  <p>
+    <%= form.submit 'Submit', :class => 'btn btn-primary btn-danger'%>
+  </p>
+  </div>
+
+<% end %>
+<%= link_to 'Cancel Account',@user, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-primary btn-sm my-3'%>
+<%= button_to 'Manage billing',billings_path ,class: 'btn btn-primary btn-sm'%>
+<%= link_to 'Back', :back,  class: 'btn btn-primary btn-sm' %>

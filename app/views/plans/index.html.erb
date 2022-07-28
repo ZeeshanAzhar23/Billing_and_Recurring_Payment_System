@@ -1,0 +1,33 @@
+<% count = 0 %>
+<h1>Current Plans</h1>
+<table class='table my-5'>
+  <thead>
+    <tr>
+      <th scope='col'>No</th>
+      <th scope='col'>Name</th>
+      <th scope='col'>Monthly Fee</th>
+      <th colspan="4"><span class='px-5' >Actions<span></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @plans.each do |plan| %>
+      <tr>
+        <th scope='row'><%= count %></th>
+        <td><%= plan.name %></td>
+      <%# <td><%= plan.plan.email.split('@')[0].capitalize %>
+        <td><%= plan.monthly_fee %></td>
+        <td><%= link_to 'Show', plan_path(plan) %></td>
+        <%if current_user && current_user.role == 'admin'%>
+        <td><%= link_to 'Edit', edit_plan_path(plan) %></td>
+        <td><%= link_to 'Destroy', plan, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <%end %>
+      </tr>
+      <%count = count.next%>
+    <% end %>
+
+  </tbody>
+</table>
+<%= link_to '+', new_plan_path , class: 'btn btn-danger my-3' %>
+<br>
+<%= link_to 'Back', :back, class: 'btn btn-primary btn-sm' %>
+
