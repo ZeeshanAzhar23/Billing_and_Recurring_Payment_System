@@ -1,0 +1,8 @@
+<div class="card" style="width: 18rem;">
+  <img src="<%=asset_path('user.png')%>" class="card-img-top" alt="...">
+  <div class="card-body">
+    <h5 class="card-title">Confirmed!</h5>
+    <p class="card-text">Thanks for Subscribing <%=@customer.name%><p>
+    <%= link_to 'back', plans_path, class: 'btn btn-primary' %>
+  </div>
+</div>
