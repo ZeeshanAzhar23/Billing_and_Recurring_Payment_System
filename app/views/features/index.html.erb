@@ -1,0 +1,18 @@
+<h1>Current Features</h1>
+<table class='table my-5'>
+  <thead>
+    <tr>
+      <th scope='col'>No</th>
+      <th scope='col'>Code</th>
+      <th scope='col'>Name</th>
+      <th scope='col'>Unit Price</th>
+      <th scope='col'>Max Unit Limit</th>
+      <th colspan="4"><span class='px-5' >Actions<span></th>
+    </tr>
+  </thead>
+  <tbody>
+    <%= render 'feature', collection: @features %>
+  </tbody>
+</table>
+<br>
+<%= link_to 'Back', :back, class: 'btn btn-primary btn-sm' %>
