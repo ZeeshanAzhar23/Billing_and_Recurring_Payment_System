@@ -1,17 +1,19 @@
+# frozen_string_literal: true
 class PlansController < ApplicationController
-  before_action :find_plan, only: [:show,:edit,:update,:destroy]
-  around_action :delete_plan, only: [:destroy]
+  before_action :find_plan, only: %i[show edit update destroy]
+  around_action :delete_plan, only: :destroy
+  # after_action :update_plan, only: :update
   def index
-  @plans=Plan.all
-  authorize @plans
+    @plans = Plan.all
+    authorize @plans
   end
-
   def new
-    @plan=Plan.new
+    @plan = Plan.new
     authorize @plan
+    @disable = false
   end
   def create
-    @plan=Plan.create(plan_params)
+    @plan = Plan.create(plan_params)
     authorize @plan
     if @plan.save
       redirect_to plans_path
@@ -20,6 +22,7 @@ class PlansController < ApplicationController
     end
   end
   def edit
+    @disable = true
     authorize @plan
   end
 
@@ -31,30 +34,23 @@ class PlansController < ApplicationController
       render 'edit'
     end
   end
-
   def show
-    @features = Plan.find(params[:id]).features.new
+    @features = @plan.features.new
   end
-
   def destroy
-    if @plan.destroy
-      redirect_to plans_path
-    end
+    redirect_to plans_path if @plan.destroy
   end
-
-  private def plan_params
-    params.require(:plan).permit(:name,:monthly_fee)
+  private
+  def plan_params
+    params.require(:plan).permit(:name, :monthly_fee)
   end
-
-  private def find_plan
+  def find_plan
     @plan = Plan.find(params[:id])
   end
-  private def delete_plan
-    @stripe_prod_id=@plan.stripe_plan_id
-    @stripe_price_id=@plan.price_id
+  def delete_plan
+    @stripe_prod_id = @plan.stripe_plan_id
+    @stripe_price_id = @plan.price_id
     yield
-    #Strip::Price.delete(@stripe_price_id)
-    Stripe::Product.update(@stripe_prod_id,active: 'false')
+    Stripe::Product.update(@stripe_prod_id, active: 'false')
   end
-
 end
