@@ -1,0 +1,16 @@
+<h1><%= @plan.name %></h1>
+<h3><%= @plan.monthly_fee%></h3>
+<h3><%= @plan.stripe_plan_id%></h3>
+<%= link_to 'Show Features', plan_features_path(@plan.id), class: 'btn btn-primary btn-sm' %>
+<%= button_to 'Subscribe', purchase_checkouts_path, params: {plan_id: @plan.id,
+pricing_id:Rails.application.credentials.dig(:stripe,:pricing,:monthly)
+}, remote: true, class: 'btn btn-primary btn-sm btn-success my-3' %>
+<br>
+<% if current_user.subscribed? %>
+  <%= button_to 'Manage Billings',billings_path,class: 'btn btn-primary btn-sm' %>
+<% end %>
+<%if current_user.admin?%>
+<%= link_to 'Add Feature', new_plan_feature_path(@plan.id),class: 'btn btn-primary btn-sm' %>
+<% end %>
+<%= link_to 'Back', :back, class: 'btn btn-primary btn-sm' %>
+
