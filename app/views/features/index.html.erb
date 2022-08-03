@@ -1,4 +1,3 @@
-<% count = 0 %>
 <h1>Current Features</h1>
 <table class='table my-5'>
   <thead>
@@ -12,24 +11,7 @@
     </tr>
   </thead>
   <tbody>
-    <% @features.each do |feature| %>
-      <tr>
-        <th scope='row'><%= count %></th>
-        <td><%= feature.code %></td>
-
-      <%# <td><%= feature.feature.email.split('@')[0].capitalize %>
-      <td><%= feature.name %></td>
-      <td><%= feature.unit_price %></td>
-      <td><%= feature.max_unit_limit %></td>
-      <td><%= link_to 'Show', [feature.plan, feature] %></td>
-        <%if current_user && current_user.role == 'admin'%>
-        <td><%= link_to 'Edit', [:edit,feature.plan, feature] %></td>
-        <td><%= link_to 'Destroy', [feature.plan, feature], method: :delete, data: { confirm: 'Are you sure?' } %></td>
-        <%end %>
-      </tr>
-      <%count = count.next%>
-    <% end %>
-
+    <%= render 'feature', collection: @features %>
   </tbody>
 </table>
 <br>
